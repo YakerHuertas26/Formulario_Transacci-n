@@ -1,0 +1,17 @@
+{
+  "type": "module",
+  "name": "formulario_transferencia",
+  "version": "1.0.0",
+  "description": "",
+  "main": "rollup.config.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "rollup --watch --config",
+    "sass":"sass --watch --style=compressed sass/index.scss public/bundle.css"
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "rollup": "^4.17.2"
+  }
+}
