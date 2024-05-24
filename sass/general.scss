@@ -1,9 +1,27 @@
-*{
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
+@use 'variables';
+
+* {
+	margin: 0;
+	padding: 0;
+	box-sizing: border-box;
+}
+html{
+    font-size: 62.5%;
 }
 
-// html{
-//     font-size: 62.5%;
-// }
+body {
+	font-family: variables.$fuente-primaria;
+	font-size: 16px;
+	min-height: 100vh;
+	display: flex;
+	align-items: center;
+	background: variables.$color-fondo;
+	color: #fff;
+	font-family: variables.$fuente-primaria;
+}
+
+.contenedor {
+	width: 90%;
+	max-width: 640px;
+	margin: auto;
+}
