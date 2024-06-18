@@ -1,19 +1,49 @@
 'use strict';
 
 const formulario$2= document.getElementById('formulario');
-const cantidad$1= formulario$2.querySelector('#cantidad');
+const cantidad= formulario$2.querySelector('#cantidad');
 // dar formato a la moneda;
 
 
 const validarCantidad= ()=>{
+    // expresión regular que admite numero y  un punto
     const expRegCantidad= /^\d+(\.\d+)?$/;
-    if (expRegCantidad.test(cantidad$1.value)) {
-        cantidad$1.classList.remove('formulario__input--error');
+    if (expRegCantidad.test(cantidad.value)) {
+        cantidad.classList.remove('formulario__input--error');
         return true;
     }
     else {
-        cantidad$1.classList.add('formulario__input--error'); 
+        cantidad.classList.add('formulario__input--error'); 
         return false;
+    } 
+};
+
+// función para validar nombre
+const validarNombre= ()=>{
+    const inputNombre= formulario$2['nombre-receptor'];
+    const expRegNombre= /^[a-zA-ZÀ-ÿ\s]{1,40}$/;
+    if (expRegNombre.test(inputNombre.value)) {
+        inputNombre.classList.remove('formulario__input--error');
+        return true;
+    }
+    else {
+        inputNombre.classList.add('formulario__input--error'); 
+        return false;
+        
+    } 
+};
+
+const validarCorreo= ()=>{
+    const inputCorre= formulario$2['correo-receptor'];
+    const expRegNombre= /^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$/;
+    if (expRegNombre.test(inputCorre.value)) {
+        inputCorre.classList.remove('formulario__input--error');
+        return true;
+    }
+    else {
+        inputCorre.classList.add('formulario__input--error'); 
+        return false;
+        
     } 
 };
 
@@ -59,15 +89,25 @@ const pasoSiguiente= ()=>{
 };
 
 const formulario= document.getElementById('formulario');
-const cantidad= formulario.querySelector('#cantidad');
 const btnSiguiente= formulario.querySelector('#formulario__btn');
 
 
+// siempre que se cargue el scrool este en la sección cero
+// document.querySelector('.formulario_body').scrollLeft= 0;
+
+
 // agregó un evento al momento que dejo de escribir
-cantidad.addEventListener('keyup',(e)=>{
-    if (cantidad.id==='cantidad') {
+formulario.addEventListener('keyup',(e)=>{
+    if (e.target.id==='cantidad') {
         validarCantidad();
     }
+    else if(e.target.id==='nombre-receptor'){
+        validarNombre();
+    }
+    else if (e.target.id==='correo-receptor') {
+        validarCorreo();
+    }
+    
 });
 
 // Agregar un evento al momento de dar btn siguiente
@@ -80,7 +120,6 @@ btnSiguiente.addEventListener('click',(e)=>{
     
     // si el paso es cantidad, valido si la cantidad es la correcta antes de dar a siguiente
     if (pasoActual==='cantidad') {
- 
         if (validarCantidad()) {
         
         //si la validadación es correcta, el paso validad se confirma mediante una función 
@@ -88,8 +127,16 @@ btnSiguiente.addEventListener('click',(e)=>{
         
         //pasar al siguiente paso 
         pasoSiguiente();
-
-        
         }
+    }
+    else if (pasoActual==='datos') {
+        if (validarNombre() && validarCorreo() ) {
+            confirmarPaso('datos');
+            pasoSiguiente();
+        }
+    }
+    else if (pasoActual==='metodo') {
+        confirmarPaso('metodo');
+        pasoSiguiente();
     }
 });

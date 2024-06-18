@@ -1,17 +1,27 @@
-import validarCantidad from "./validaciones";
+import { validarCantidad, validarNombre, validarCorreo } from "./validaciones";
 import confirmarPaso from "./confirmarPaso";
 import pasoSiguiente from "./PasoSiguiente";
 
 const formulario= document.getElementById('formulario');
-const cantidad= formulario.querySelector('#cantidad');
 const btnSiguiente= formulario.querySelector('#formulario__btn')
 
 
+// siempre que se cargue el scrool este en la sección cero
+// document.querySelector('.formulario_body').scrollLeft= 0;
+
+
 // agregó un evento al momento que dejo de escribir
-cantidad.addEventListener('keyup',(e)=>{
-    if (cantidad.id==='cantidad') {
+formulario.addEventListener('keyup',(e)=>{
+    if (e.target.id==='cantidad') {
         validarCantidad();
     }
+    else if(e.target.id==='nombre-receptor'){
+        validarNombre();
+    }
+    else if (e.target.id==='correo-receptor') {
+        validarCorreo();
+    }
+    
 });
 
 // Agregar un evento al momento de dar btn siguiente
@@ -24,7 +34,6 @@ btnSiguiente.addEventListener('click',(e)=>{
     
     // si el paso es cantidad, valido si la cantidad es la correcta antes de dar a siguiente
     if (pasoActual==='cantidad') {
- 
         if (validarCantidad()) {
         
         //si la validadación es correcta, el paso validad se confirma mediante una función 
@@ -32,9 +41,17 @@ btnSiguiente.addEventListener('click',(e)=>{
         
         //pasar al siguiente paso 
         pasoSiguiente();
-
-        
         }
+    }
+    else if (pasoActual==='datos') {
+        if (validarNombre() && validarCorreo() ) {
+            confirmarPaso('datos')
+            pasoSiguiente();
+        }
+    }
+    else if (pasoActual==='metodo') {
+        confirmarPaso('metodo');
+        pasoSiguiente();
     }
 });
 
