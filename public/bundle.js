@@ -137,6 +137,20 @@ btnSiguiente.addEventListener('click',(e)=>{
     }
     else if (pasoActual==='metodo') {
         confirmarPaso('metodo');
+        const cantidad= (document.querySelector('.formulario__parrafos [data-valor="cantidad"] span'));
+        const nombre= document.querySelector('.formulario__parrafos [data-valor="nombre-receptor"] span') ;
+        const correo= document.querySelector('.formulario__parrafos [data-valor="correo-receptor"] span') ;
+        const metodo= document.querySelector('.formulario__parrafos [data-valor="metodo"] span'); 
+        
+        // dar formato a mi cantidad
+        const opcion = {style: 'currency', currency: 'PEN'};
+        const formatoMoneda= new Intl.NumberFormat('es-PE', opcion);
+
+        cantidad.innerText = formatoMoneda.format(formulario['cantidad'].value);
+        nombre.innerText= formulario['nombre-receptor'].value;
+        correo.innerText= formulario['correo-receptor'].value;
+        metodo.innerText= formulario.metodo.value;
+        console.log(formulario.metodo);
         pasoSiguiente();
     }
 });
