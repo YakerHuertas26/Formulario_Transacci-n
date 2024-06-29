@@ -64,8 +64,41 @@ btnSiguiente.addEventListener('click',(e)=>{
         nombre.innerText= formulario['nombre-receptor'].value;
         correo.innerText= formulario['correo-receptor'].value;
         metodo.innerText= formulario.metodo.value;
-        console.log(formulario.metodo);
+
+        // cambiar el texto de siguiente a transferir
+        btnSiguiente.querySelector('span').innerHTML='Transferir';
+        
+        // cambiar el icono de siguiente a banco
+        btnSiguiente.querySelector('.formulario__btn-contenedor-icono').classList.remove('formulario__btn-contenedor-icono--active');
+        btnSiguiente.querySelector('[data-icono="banco"]').classList.add('formulario__btn-contenedor-icono--active');
+        
+        // el boton lo inactivo
+        btnSiguiente.classList.add('formulario__btn--disabled');
+        
         pasoSiguiente();
+
+        // despues de 4 segundos lo activo nuevamente
+        setTimeout(()=>{
+            btnSiguiente.classList.remove('formulario__btn--disabled');
+        },4000);
+
+    }
+    
+    // condiciono para que pasen los 4 segundos con la función maches 
+    else if(pasoActual=='confirmacion' && !btnSiguiente.matches('.formulario__btn--disabled')){
+        // el boton lo inactivo
+        btnSiguiente.classList.add('formulario__btn--disabled');
+
+        // cambio a transfiriendo
+        btnSiguiente.querySelector('span').innerText='transfiriendo...';
+        
+        // luego de 4 segundos
+        setTimeout(()=>{
+            btnSiguiente.classList.remove('formulario__btn--disabled');
+            document.querySelector('.formulario').classList.add('formulario--hidden');
+            document.querySelector('.alerta').classList.add('alerta--active');
+        },4000);
+
     }
 });
 
