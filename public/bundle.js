@@ -187,3 +187,49 @@ btnSiguiente.addEventListener('click',(e)=>{
 
     }
 });
+
+// Agrego un evento al hacer click en la linea de pasos
+const pasoSeleccioando= document.querySelector('.linea-pasos');
+
+pasoSeleccioando.addEventListener('click',(e)=>{
+    if (!e.target.closest('.linea-pasos__paso')) return;
+        let pasoActual= document.querySelector('.linea-pasos__paso-check--active').closest('.linea-pasos__paso').dataset.paso;
+
+        if (pasoActual==='cantidad') {
+            if (!validarCantidad())return false;
+            
+        }
+        else if(pasoActual==='datos'){
+            if (!validarNombre() || !validarCorreo()) return false;
+        }
+
+        btnSiguiente.querySelector('span').innerText='Siguiente';
+        btnSiguiente.querySelector('[data-icono="banco"]').classList.remove('formulario__btn-contenedor-icono--active');
+
+
+        btnSiguiente.querySelector('[data-icono="siguiente"]').classList.add('formulario__btn-contenedor-icono--active');
+
+        btnSiguiente.classList.remove('formulario__btn--disabled');
+
+        // regresión a anterior sección 
+        const PasoANavegar= e.target.closest('.linea-pasos__paso');
+        if (PasoANavegar.querySelector('.linea-pasos__paso-check--checked')) {
+                let pasoEditarID= e.target.closest('.linea-pasos__paso').dataset.paso;
+
+                let pasoActualCambioIcono=document.querySelector('.linea-pasos__paso-check--active');
+                pasoActualCambioIcono.classList.remove('linea-pasos__paso-check--active');
+
+
+                pasoSeleccioando.querySelector(`[data-paso="${pasoEditarID}"] span`).classList.add('linea-pasos__paso-check--active');
+                console.log('ya pudes editar');
+
+                document.querySelector(`.formulario__body [data-paso="${pasoEditarID}"]`).scrollIntoView({
+                    inline:'start',
+                    behavior:'smooth'
+                });
+
+                
+        }        
+        
+
+});
